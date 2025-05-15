@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		769D14342DD4FAA300D2276E /* map.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 769D14332DD4FAA300D2276E /* map.mp4 */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		769D14332DD4FAA300D2276E /* map.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.mp4; sourceTree = "<group>"; };
 		76EF1BDC2DD2090B00B3229D /* ShareMyLocationBySmsSwiftProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareMyLocationBySmsSwiftProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -45,6 +50,7 @@
 		76EF1BD32DD2090B00B3229D = {
 			isa = PBXGroup;
 			children = (
+				769D14332DD4FAA300D2276E /* map.mp4 */,
 				76EF1BDE2DD2090B00B3229D /* ShareMyLocationBySmsSwiftProject */,
 				76EF1BDD2DD2090B00B3229D /* Products */,
 			);
@@ -122,6 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				769D14342DD4FAA300D2276E /* map.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

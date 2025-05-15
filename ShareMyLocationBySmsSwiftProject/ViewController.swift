@@ -9,7 +9,7 @@ import UIKit
 import ContactsUI
 import CoreLocation
 import MessageUI
-
+import AVFoundation
 
 class ViewController: UIViewController, CNContactPickerDelegate, CLLocationManagerDelegate, MFMessageComposeViewControllerDelegate {
 
@@ -18,13 +18,48 @@ class ViewController: UIViewController, CNContactPickerDelegate, CLLocationManag
     var currentLocation: CLLocation?
     var selectedPhoneNumber: String?
 
+    // Video oynatıcı için gerekli değişkenler
+    var queuePlayer: AVQueuePlayer?
+    var playerLooper: AVPlayerLooper?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Arka plan videosunu oynat
+        playBackgroundVideo()
 
         // Konum izni al
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
     }
+
+    func playBackgroundVideo() {
+        guard let path = Bundle.main.path(forResource: "map", ofType: "mp4") else {
+            print("Video bulunamadı.")
+            return
+        }
+
+        let url = URL(fileURLWithPath: path)
+        let playerItem = AVPlayerItem(url: url)
+
+        queuePlayer = AVQueuePlayer()
+        playerLooper = AVPlayerLooper(player: queuePlayer!, templateItem: playerItem)
+
+        let playerLayer = AVPlayerLayer(player: queuePlayer!)
+
+        // Ekranın ortasına yerleştirilmiş, daha küçük bir alan tanımla
+        let width = view.bounds.width * 1.0
+        let height = view.bounds.height * 1.0
+        let x = (view.bounds.width - width) / 1
+        let y = (view.bounds.height - height) / 1
+        playerLayer.frame = CGRect(x: x, y: y, width: width, height: height)
+
+        playerLayer.videoGravity = .resizeAspectFill
+        view.layer.insertSublayer(playerLayer, at: 0)
+
+        queuePlayer?.play()
+    }
+
 
     @objc func selectContact() {
         let contactPicker = CNContactPickerViewController()
@@ -36,7 +71,7 @@ class ViewController: UIViewController, CNContactPickerDelegate, CLLocationManag
     @IBAction func buttonTapped(_ sender: UIButton) {
         selectContact()
     }
-    
+
     // Kişi seçildiğinde
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
         guard let phoneNumber = contact.phoneNumbers.first?.value.stringValue else {
